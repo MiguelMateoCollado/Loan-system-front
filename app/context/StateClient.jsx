@@ -5,7 +5,14 @@ import validationSchema from "../resources/validationSchema";
 import useCreateClient from "../hooks/useCreateClient";
 import { useFormik } from "formik";
 const StateClient = ({ children }) => {
-  const { onCreateUser, success, setSuccess, router } = useCreateClient();
+  const {
+    onCreateUser,
+    success,
+    setSuccess,
+    router,
+    errorHandler,
+    setErrorHandler,
+  } = useCreateClient();
   const {
     handleSubmit,
     handleChange,
@@ -23,20 +30,27 @@ const StateClient = ({ children }) => {
       address: "",
       phone_number: "",
       DNI: "",
+      dni_images: [],
     },
     validationSchema,
     onSubmit: async (values) => {
-      await onCreateUser(values, resetForm);
-      resetForm({ role: "668711dad14a94c218db8dd5" });
+      try {
+        await onCreateUser(values, resetForm);
+        resetForm({ role: "668711dad14a94c218db8dd5" });
+      } catch (error) {
+        setErrorHandler({ active: true, message: error.message });
+      }
     },
   });
 
-  const [imageUpload, setUploadImage] = useState("");
+  const [imageUpload, setUploadImage] = useState({ foto: "", dni_images: "" });
   return (
     <clientCreatorContext.Provider
       value={{
+        errorHandler,
         handleSubmit,
         handleChange,
+        setErrorHandler,
         setFieldValue,
         success,
         setSuccess,

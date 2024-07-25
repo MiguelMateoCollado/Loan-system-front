@@ -7,21 +7,19 @@ export const InputType = ({ data, className, textareaClassName }) => {
   const { id, label, type, name, placeholder } = data;
   if (type == "textarea") {
     return (
-      <div
-        key={id}
-        className={`flex flex-col ${
-          type == "textarea" ? "col-span-2" : "col-span-1"
-        }  gap-2`}
-      >
-        <label htmlFor="name">{label}</label>
+      <div key={id} className={`flex flex-col col-span-2 gap-2`}>
+        <label htmlFor={name}>{label}</label>
         <textarea
           id={id}
-          className={` ${className} ${textareaClassName}  `}
+          className={` ${className} ${textareaClassName} ${
+            errors[name] && "border-red-600 bg-red-100 placeholder:text-red-500"
+          }   `}
           name={name}
           value={values[name]}
           onChange={handleChange}
           placeholder={placeholder}
         />
+        {errors[name] && <ErrorSign name={name} />}
       </div>
     );
   }
@@ -40,7 +38,7 @@ export const InputType = ({ data, className, textareaClassName }) => {
         onChange={handleChange}
         placeholder={placeholder}
       />
-      {errors[name] && <ErrorSign>{errors[name]}</ErrorSign>}
+      {errors[name] && <ErrorSign name={name} />}
     </div>
   );
 };
