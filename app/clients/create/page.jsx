@@ -4,14 +4,20 @@ import "/node_modules/flag-icons/css/flag-icons.min.css";
 import inputsData from "../../resources/inputsData";
 import DropzoneBox from "../../components/DropzoneBox";
 import { InputType } from "../../components/InputType";
-import Sign from "../../components/SuccessSign";
+import Sign from "../../components/Sign";
 import ErrorSign from "../../components/ErrorSign";
 import clientCreatorContext from "../../context/clientCreatorContext";
 import FormComp from "../../components/FormComp";
-
+import { Icon } from "@iconify/react";
+import ButtonRebirded from "@/app/components/ButtonRebirded";
 const page = () => {
-  const { errors, handleChange, values, success, errorHandler } =
-    useContext(clientCreatorContext);
+  const {
+    router,
+    values,
+    success,
+    errorHandler,
+    setSuccess,
+  } = useContext(clientCreatorContext);
 
   return (
     <div className="flex justify-center min-h-screen flex-col col-span-9 items-center">
@@ -41,19 +47,17 @@ const page = () => {
           <div className="col-span-1 flex gap-4 rounded-md flex-col relative ">
             <div className="flex relative gap-4">
               <span className="fi absolute text-2xl z-10 fi-do"></span>
-              <input
-                className="input rounded-md z-0 "
-                id="phone_number"
-                placeholder=" Ingresar numero de telefono"
-                name="phone_number"
-                value={values["phone_number"]}
-                onChange={handleChange}
+              <InputType
+                data={{
+                  id: "phone_number",
+                  name: "phone_number",
+                  value: values["phone_number"],
+                  placeholder: "Ingresar numero de telefono",
+                }}
+                className="rounded-md border bg-white flex flex-col input-ghost-gray input w-full  input-md"
               />
             </div>
-            <ErrorSign name="phone_number" />
           </div>
-          {success && <Sign />}
-          {errorHandler.active == true && <Sign.Error />}
           <button
             type="submit"
             className="btn btn-outline-primary rounded-md col-span-2"
@@ -62,6 +66,31 @@ const page = () => {
           </button>
         </div>
       </FormComp>
+      {success && (
+        <Sign
+          icon={
+            <Icon
+              className="text-green-400 text-7xl"
+              icon="material-symbols:check-box"
+            />
+          }
+          message={"Usuario Creado correctamente"}
+        >
+          <ButtonRebirded
+            onClick={() => {
+              setSuccess(false);
+              router.push("/clients");
+            }}
+          >
+            Salir
+          </ButtonRebirded>
+
+          <ButtonRebirded onClick={() => setSuccess(false)}>
+            Quedarse
+          </ButtonRebirded>
+        </Sign>
+      )}
+      {errorHandler.active == true && <Sign.Error />}
     </div>
   );
 };

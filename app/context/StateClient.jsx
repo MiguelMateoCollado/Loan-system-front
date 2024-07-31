@@ -12,6 +12,8 @@ const StateClient = ({ children }) => {
     router,
     errorHandler,
     setErrorHandler,
+    setDeleteUser,
+    deleteUser,
   } = useCreateClient();
   const {
     handleSubmit,
@@ -60,6 +62,8 @@ const StateClient = ({ children }) => {
         values,
         errors,
         onCreateUser,
+        setDeleteUser,
+        deleteUser,
       }}
     >
       {children}

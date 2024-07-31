@@ -6,6 +6,7 @@ import generateMessage from "../resources/generateMessage";
 const useCreateClient = () => {
   const router = useRouter();
   const [success, setSuccess] = useState(false);
+  const [deleteUser, setDeleteUser] = useState(false);
   const [errorHandler, setErrorHandler] = useState({
     active: false,
     message: "",
@@ -59,6 +60,8 @@ const useCreateClient = () => {
 
   return {
     onCreateUser,
+    deleteUser,
+    setDeleteUser,
     success,
     setErrorHandler,
     setSuccess,
