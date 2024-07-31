@@ -35,11 +35,8 @@ export const TableContent = () => {
     getUsers();
   }, []);
 
-  useEffect(() => {
-    console.log(users);
-  }, [users]);
   return (
-    <div className="flex flex-wrap justify-center items-center w-full   ">
+    <div className="flex flex-wrap justify-center items-center w-full">
       <div className="w-11/12 flex justify-end">
         <Link
           href={"/clients/create"}
@@ -57,18 +54,13 @@ export const TableContent = () => {
             <th>Numero telefonico</th>
             <th>Ingresos mensuales</th>
             <th>Gastos mensuales</th>
-            <th>Detalles</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
           {!loading &&
             users.map((user) => (
-              <tr
-                key={user.id}
-                onClick={() => handleDelete(user.id)}
-                className="overflow-auto"
-              >
+              <tr key={user.id} className="overflow-auto">
                 <td>
                   <div className="w-20 h-20 justify-center bg-yellow-700 items-center flex rounded-full overflow-hidden">
                     <img
@@ -83,18 +75,16 @@ export const TableContent = () => {
                 <td>{user.phone_number}</td>
                 <td>{user.monthly_income}</td>
                 <td>{user.monthly_expenses}</td>
-                <td>
+                <td className="flex gap-2 flex-col">
                   <ButtonRebirded
                     className={"btn btn-outline-secondary rounded-md"}
                     onClick={(e) => {
-                      router.push(`/clients/${user.email}`);
+                      router.push(`/clients/${user.id}`);
                     }}
                   >
                     <Icon icon="carbon:classification" />
                     Detalles
                   </ButtonRebirded>
-                </td>
-                <td>
                   <ButtonRebirded
                     className={"btn btn-outline-error rounded-md"}
                     onClick={() => {
@@ -115,22 +105,22 @@ export const TableContent = () => {
                     <Sign
                       icon={
                         <Icon
-                          className="text-yellow-800 text-7xl"
-                          icon="material-symbols:check-box"
+                          className="text-yellow-600 text-7xl"
+                          icon="ri:question-line"
                         />
                       }
                       message={"Seguro que quieres eliminar este usuario"}
                     >
+                      <ButtonRebirded onClick={() => setDeleteUser(false)}>
+                        No
+                      </ButtonRebirded>
+
                       <ButtonRebirded
                         onClick={() => {
                           setDeleteUser(false);
                           handleDelete();
                         }}
                       >
-                        No
-                      </ButtonRebirded>
-
-                      <ButtonRebirded onClick={() => setDeleteUser(false)}>
                         Si
                       </ButtonRebirded>
                     </Sign>
