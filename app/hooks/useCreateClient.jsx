@@ -19,14 +19,15 @@ const useCreateClient = () => {
         axios
           .post("http://localhost:3001/uploads", request.data)
           .then((response) => {
+            console.log(response);
             return response.data;
           })
       )
     );
-    console.log(response);
+
     let manteinPhoto = data.image;
     let manteinDniImages = data.dni_images;
-    data.dni_images = response[1].imageUrls;
+    data.dni_images = response[1];
     data.image = response[0].imageUrl;
 
     await axios

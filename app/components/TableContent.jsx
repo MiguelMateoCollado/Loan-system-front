@@ -62,13 +62,12 @@ export const TableContent = () => {
             users.map((user) => (
               <tr key={user.id} className="overflow-auto">
                 <td>
-                  <div className="w-20 h-20 justify-center bg-yellow-700 items-center flex rounded-full overflow-hidden">
-                    <img
-                      className="object-cover h-[5rem]"
-                      src={`http://localhost:3001/${user.image}`}
-                      alt=""
-                    />
-                  </div>
+                  <div
+                    style={{
+                      backgroundImage: `url('http://localhost:3001/${user.image}')`,
+                    }}
+                    className={`w-20 h-20 rounded-full bg-cover bg-center justify-center bg-yellow-700 col-span-1 items-center flex  overflow-hidden`}
+                  ></div>
                 </td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
