@@ -14,6 +14,8 @@ const StateClient = ({ children }) => {
     setErrorHandler,
     setDeleteUser,
     deleteUser,
+    setuserEmail,
+    userEmail,
   } = useCreateClient();
   const {
     handleSubmit,
@@ -55,6 +57,8 @@ const StateClient = ({ children }) => {
         setErrorHandler,
         setFieldValue,
         success,
+        setuserEmail,
+        userEmail,
         setSuccess,
         imageUpload,
         setUploadImage,
