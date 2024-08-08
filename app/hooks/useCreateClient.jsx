@@ -7,6 +7,8 @@ const useCreateClient = () => {
   const router = useRouter();
   const [success, setSuccess] = useState(false);
   const [deleteUser, setDeleteUser] = useState(false);
+  let [userEmail, setuserEmail] = useState("");
+
   const [errorHandler, setErrorHandler] = useState({
     active: false,
     message: "",
@@ -67,6 +69,8 @@ const useCreateClient = () => {
     setErrorHandler,
     setSuccess,
     router,
+    setuserEmail,
+    userEmail,
     handleDelete,
     errorHandler,
   };

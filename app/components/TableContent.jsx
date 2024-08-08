@@ -6,12 +6,13 @@ import clientCreatorContext from "../context/clientCreatorContext";
 import axios from "axios";
 import { Icon } from "@iconify/react";
 import ButtonRebirded from "./ButtonRebirded";
+import useOptionButtons from "../resources/useOptionButtons";
 import Sign from "./Sign";
 export const TableContent = () => {
-  const { setDeleteUser, deleteUser, router } =
+  const { setDeleteUser, deleteUser, userEmail } =
     useContext(clientCreatorContext);
+  const { buttonInputs } = useOptionButtons();
   let [users, setUsers] = useState([]);
-  let [userEmail, setuserEmail] = useState("");
   let [loading, setloading] = useState(false);
   const handleDelete = () => {
     // Filtrar el array para excluir el elemento con el id proporcionado
@@ -74,37 +75,26 @@ export const TableContent = () => {
                 <td>{user.phone_number}</td>
                 <td>{user.monthly_income}</td>
                 <td>{user.monthly_expenses}</td>
-                <td className="flex gap-2 flex-col">
-                  <ButtonRebirded
-                    className={"btn btn-outline-secondary rounded-md"}
-                    onClick={(e) => {
-                      router.push(`/clients/${user.id}`);
-                    }}
-                  >
-                    <Icon icon="carbon:classification" />
-                    Detalles
-                  </ButtonRebirded>
-                  <ButtonRebirded
-                    className={"btn btn-outline-error rounded-md"}
-                    onClick={() => {
-                      setDeleteUser(true);
-                      setuserEmail(user.email);
-                    }}
-                  >
-                    <Icon icon="mdi:garbage-can-outline" />
-                    Delete
-                  </ButtonRebirded>{" "}
-                  <ButtonRebirded className="btn btn-outline-primary rounded-md">
-                    <Icon icon="lucide:pen-line" />
-                    Editar
-                  </ButtonRebirded>
+                <td className="gap-2 text-2xl">
+                  <div className="flex gap-3 justify-center">
+                    {buttonInputs.map(({ buttonStyle, icon, method }) => {
+                      return (
+                        <ButtonRebirded
+                          onClick={() => method(user)}
+                          className={buttonStyle}
+                        >
+                          {icon}
+                        </ButtonRebirded>
+                      );
+                    })}
+                  </div>
                 </td>
-                <td>
+                <td className="">
                   {deleteUser && (
                     <Sign
                       icon={
                         <Icon
-                          className="text-yellow-600 text-7xl"
+                          className="text-yellow-600 text-7xl "
                           icon="ri:question-line"
                         />
                       }
