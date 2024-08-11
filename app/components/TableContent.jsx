@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useContext } from "react";
 import clientCreatorContext from "../context/clientCreatorContext";
 import axios from "axios";
-import { Button, IconButton } from "@material-tailwind/react";
 import { Icon } from "@iconify/react";
 import useOptionButtons from "../resources/useOptionButtons";
 import ButtonRebirded from "../components/ButtonRebirded";
@@ -12,11 +11,12 @@ import ReactLoading from "react-loading";
 import Sign from "./Sign";
 import { Pagination } from "./Pagination";
 export const TableContent = ({ children, url }) => {
-  const { setDeleteUser, deleteUser, userEmail } =
+  const { setDeleteUser, deleteUser, userEmail, currentPage, setPages } =
     useContext(clientCreatorContext);
   const { buttonInputs } = useOptionButtons();
   let [users, setUsers] = useState([]);
   let [loading, setloading] = useState(false);
+
   const handleDelete = () => {
     // Filtrar el array para excluir el elemento con el id proporcionado
     const newItems = users.filter((item) => item.email !== userEmail);
@@ -28,17 +28,19 @@ export const TableContent = ({ children, url }) => {
     let getUsers = async () => {
       try {
         setloading(true);
-        let response = await axios.get(url);
-        setUsers(response.data);
+        let response = await axios.get(`${url}${currentPage}`);
+        setUsers(response.data.users);
+        setPages(response.data.totalPages);
         setloading(false);
       } catch (error) {
         console.log(error.message);
       }
     };
-
     getUsers();
-  }, []);
-
+  }, [currentPage]);
+  useEffect(() => {
+    console.log(users);
+  }, [users]);
   return (
     <div className="flex flex-wrap justify-center items-center w-full">
       {!loading === false ? (
@@ -84,16 +86,19 @@ export const TableContent = ({ children, url }) => {
                   <td>{user.monthly_expenses}</td>
                   <td className="gap-2 text-2xl">
                     <div className="flex gap-3 justify-center">
-                      {buttonInputs.map(({ buttonStyle, icon, method }) => {
-                        return (
-                          <ButtonRebirded
-                            onClick={() => method(user)}
-                            className={buttonStyle}
-                          >
-                            {icon}
-                          </ButtonRebirded>
-                        );
-                      })}
+                      {buttonInputs.map(
+                        ({ buttonStyle, icon, method }, index) => {
+                          return (
+                            <ButtonRebirded
+                              key={index}
+                              onClick={() => method(user)}
+                              className={buttonStyle}
+                            >
+                              {icon}
+                            </ButtonRebirded>
+                          );
+                        }
+                      )}
                     </div>
                   </td>
                   <td className="">

@@ -7,10 +7,10 @@ const page = ({ params }) => {
   const [user, setUser] = useState({});
   useEffect(() => {
     async function getUser() {
-      let user = await fetch(`http://localhost:3001/users/${id}`).then(
-        (response) => response.json()
-      );
-
+      console.log(id);
+      let user = await fetch(`http://localhost:3001/users/user/${id}`)
+        .then((response) => response.json())
+        .catch((error) => console.log(error));
       setUser(user);
     }
     getUser();
