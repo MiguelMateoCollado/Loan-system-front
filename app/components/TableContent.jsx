@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect,useState } from "react";
 import Link from "next/link";
 import { useContext } from "react";
 import clientCreatorContext from "../context/clientCreatorContext";
@@ -10,13 +10,15 @@ import ButtonRebirded from "../components/ButtonRebirded";
 import ReactLoading from "react-loading";
 import Sign from "./Sign";
 import { Pagination } from "./Pagination";
+import { useAtom } from "jotai";
+import loadingAtom from "../atoms/loadingAtom";
+import { usersAtom } from "../atoms/usersAtom";
 export const TableContent = ({ children, url }) => {
-  const { setDeleteUser, deleteUser, userEmail, currentPage, setPages } =
+  const { setDeleteUser, deleteUser, userEmail } =
     useContext(clientCreatorContext);
   const { buttonInputs } = useOptionButtons();
-  let [users, setUsers] = useState([]);
-  let [loading, setloading] = useState(false);
-
+  let [loading,] = useAtom(loadingAtom);
+  const [users, setUsers] = useAtom(usersAtom) 
   const handleDelete = () => {
     // Filtrar el array para excluir el elemento con el id proporcionado
     const newItems = users.filter((item) => item.email !== userEmail);
@@ -24,23 +26,6 @@ export const TableContent = ({ children, url }) => {
     setUsers(newItems);
     axios.delete(`${url}${userEmail}`);
   };
-  useEffect(() => {
-    let getUsers = async () => {
-      try {
-        setloading(true);
-        let response = await axios.get(`${url}${currentPage}`);
-        setUsers(response.data.users);
-        setPages(response.data.totalPages);
-        setloading(false);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-    getUsers();
-  }, [currentPage]);
-  useEffect(() => {
-    console.log(users);
-  }, [users]);
   return (
     <div className="flex flex-wrap justify-center items-center w-full">
       {!loading === false ? (
@@ -69,7 +54,7 @@ export const TableContent = ({ children, url }) => {
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
+              {users?.map((user) => (
                 <tr key={user.id} className="overflow-auto">
                   <td>
                     <div

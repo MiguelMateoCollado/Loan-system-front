@@ -1,16 +1,15 @@
 "use client";
-import { useContext } from "react";
 import { Icon } from "@iconify/react";
-import clientCreatorContext from "../context/clientCreatorContext";
+import { useAtom, useAtomValue } from "jotai";
+import {
+  generatePageNumbersAtom,
+  currentPageAtom,
+  handleChangePageAtom
+} from "../atoms/paginationAtom";
 export const Pagination = () => {
-  const { currentPage, setCurrentPage, pageNumbers } =
-    useContext(clientCreatorContext);
-  const handlePageChange = (pageNumber) => {
-    if (pageNumber <= pageNumbers.length  && pageNumber > 0) {
-      setCurrentPage(pageNumber);
-    }
-  };
-
+  const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
+  const pageNumbers = useAtomValue(generatePageNumbersAtom);
+  const [,handlePageChange] = useAtom(handleChangePageAtom)
   return (
     <div className="my-5">
       <div className="flex gap-x-1 ">
@@ -20,7 +19,7 @@ export const Pagination = () => {
         >
           <Icon icon="ri:arrow-left-s-line" />
         </button>
-        {pageNumbers.map((pageNumber, index) =>
+        {pageNumbers?.map((pageNumber, index) =>
           pageNumber === "..." ? (
             <span
               key={index}

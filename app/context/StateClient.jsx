@@ -6,8 +6,6 @@ import useCreateClient from "../hooks/useCreateClient";
 import { useFormik } from "formik";
 import usePaginationClient from "../hooks/usePaginationClient";
 const StateClient = ({ children }) => {
-  const { currentPage, pageNumbers, totalPages, setCurrentPage, setPages } =
-    usePaginationClient();
   const {
     onCreateUser,
     success,
@@ -54,11 +52,6 @@ const StateClient = ({ children }) => {
   return (
     <clientCreatorContext.Provider
       value={{
-        setPages,
-        totalPages,
-        currentPage,
-        pageNumbers,
-        setCurrentPage,
         errorHandler,
         handleSubmit,
         handleChange,

@@ -2,7 +2,10 @@
 import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useAtomValue } from "jotai";
+import countAtom from "@/app/atoms/countAtom";
 const page = ({ params }) => {
+  const count = useAtomValue(countAtom);
   const { id } = params;
   const [user, setUser] = useState({});
   useEffect(() => {
@@ -34,6 +37,7 @@ const page = ({ params }) => {
             }}
             className={`h-[25rem] w-2/3 bg-cover bg-center justify-center  col-span-1 items-center flex  overflow-hidden`}
           ></div>
+          {count}
           <div className="flex justify-around w-2/3 text-center gap-2">
             <div className="bg-green-600 p-2 w-fit rounded-md text-lg flex items-center gap-2 text-white">
               <Icon icon="material-symbols:attach-money" />
