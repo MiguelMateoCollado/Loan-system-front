@@ -1,15 +1,18 @@
 "use client";
 import { Icon } from "@iconify/react";
+import { useEffect } from "react";
 import { useAtom, useAtomValue } from "jotai";
 import {
   generatePageNumbersAtom,
   currentPageAtom,
-  handleChangePageAtom
+  handleChangePageAtom,
 } from "../atoms/paginationAtom";
 export const Pagination = () => {
-  const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
+  const [currentPage] = useAtom(currentPageAtom);
   const pageNumbers = useAtomValue(generatePageNumbersAtom);
-  const [,handlePageChange] = useAtom(handleChangePageAtom)
+  const [, handlePageChange] = useAtom(handleChangePageAtom);
+
+  useEffect(() => {}, [currentPage]);
   return (
     <div className="my-5">
       <div className="flex gap-x-1 ">

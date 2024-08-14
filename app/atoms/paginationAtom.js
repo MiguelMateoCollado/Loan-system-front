@@ -1,9 +1,14 @@
 import { atom } from "jotai";
 import { usersAtom } from "./usersAtom";
-const currentPageAtom = atom(0);
-const pagesAtom = atom(0);
-const generatePageNumbersAtom = atom((get) => {
-  let pages = get(pagesAtom);
+
+const currentPageAtom = atom(1);
+const pagesAtom = atom(async (get) => {
+  let pages = await get(usersAtom);
+  console.log();
+  return pages.totalPages;
+});
+const generatePageNumbersAtom = atom(async (get) => {
+  let pages = await get(pagesAtom);
   let currentPage = get(currentPageAtom);
   const pageNumbers = [];
   const maxPagesToShow = 5;
@@ -41,14 +46,15 @@ const generatePageNumbersAtom = atom((get) => {
   }
   return pageNumbers;
 });
-const handleChangePageAtom = atom(null, (get, set, update) => {
-  let pageNumbers = get(generatePageNumbersAtom);
-  console.log(pageNumbers)
-  set(currentPageAtom, () => {
-    if (update <= pageNumbers.length && update > 0) {
+
+const handleChangePageAtom = atom(null, async (get, set, update) => {
+  let pages = await get(pagesAtom);
+  console.log(pages);
+  if (update > 0 && update <= pages) {
+    set(currentPageAtom, () => {
       return update;
-    }
-  });
+    });
+  }
 });
 
 export {

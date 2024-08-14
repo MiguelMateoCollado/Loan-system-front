@@ -19,6 +19,7 @@ export const TableContent = ({ children, url }) => {
   const { buttonInputs } = useOptionButtons();
   let [loading,] = useAtom(loadingAtom);
   const [users, setUsers] = useAtom(usersAtom) 
+
   const handleDelete = () => {
     // Filtrar el array para excluir el elemento con el id proporcionado
     const newItems = users.filter((item) => item.email !== userEmail);
@@ -54,7 +55,7 @@ export const TableContent = ({ children, url }) => {
               </tr>
             </thead>
             <tbody>
-              {users?.map((user) => (
+              {users.users?.map((user) => (
                 <tr key={user.id} className="overflow-auto">
                   <td>
                     <div
