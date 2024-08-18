@@ -1,22 +1,21 @@
-import { atom, useAtom } from "jotai";
+import { atom } from "jotai";
 import { currentPageAtom, pagesAtom } from "./paginationAtom";
 import axios from "axios";
-const usersAtom = atom([]);
 
+const usersAtom = atom([]);
+const userAtom = atom({});
+const searchAtom = atom("");
 const refreshUserAtom = atom(null, async (get, set) => {
   let response = await axios.get(
     `http://localhost:3001/users/${get(currentPageAtom)}`
   );
   set(usersAtom, response.data);
 });
-const userAtom = atom({});
+
 const getUserAtom = atom(null, async (get, set, update) => {
   let users = await get(usersAtom);
 
-  set(
-    userAtom,
-    users.users.filter((user) => user.id === update)[0]
-  );
+  set(userAtom, users.users.filter((user) => user.id === update)[0]);
 });
 const userEmailAtom = atom("");
 
@@ -29,7 +28,8 @@ const onChangePageAtom = atom(null, async (get, set, update) => {
   );
   set(usersAtom, response.data);
 });
-const onDeleteUserAtom = atom(null, async (get, set, update) => {
+
+const onDeleteUserAtom = atom(null, async (get, set) => {
   let users = get(usersAtom);
   let userEmail = get(userEmailAtom);
   let pages = get(pagesAtom);
@@ -39,7 +39,23 @@ const onDeleteUserAtom = atom(null, async (get, set, update) => {
   set(usersAtom, { ...users, users: newSet });
 });
 
+const searchUserAtom = atom(null, async (get, set, update) => {
+  set(currentPageAtom, 1);
+  let currentPage = get(currentPageAtom);
+  console.log(update);
+  let response = await axios.get(
+    `http://localhost:3001/users/user/${update}?page=${currentPage}`
+  );
+  if (response.message !== undefined) {
+    console.log(response.message);
+  }
+  console.log(response.data)
+  set(usersAtom, response.data);
+});
+
 export {
+  searchAtom,
+  searchUserAtom,
   onChangePageAtom,
   usersAtom,
   refreshUserAtom,

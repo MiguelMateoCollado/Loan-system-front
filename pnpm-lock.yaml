@@ -14,6 +14,9 @@ dependencies:
   flag-icons:
     specifier: ^7.2.3
     version: 7.2.3
+  format-money-js:
+    specifier: ^1.6.3
+    version: 1.6.3
   formik:
     specifier: ^2.4.6
     version: 2.4.6(react@18.3.1)
@@ -1652,6 +1655,10 @@ packages:
       asynckit: 0.4.0
       combined-stream: 1.0.8
       mime-types: 2.1.35
+    dev: false
+
+  /format-money-js@1.6.3:
+    resolution: {integrity: sha512-neeYRPJ5zeepUooQaYmQQLmISmA4d8SbhyMGbr+dCXoQG0eVDYItWMK8HcMbBJTAn15l5Xf76pqJGoAtu+e8Vg==}
     dev: false
 
   /formik@2.4.6(react@18.3.1):

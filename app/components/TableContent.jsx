@@ -1,25 +1,24 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 import { useContext } from "react";
 import clientCreatorContext from "../context/clientCreatorContext";
-import axios from "axios";
 import { Icon } from "@iconify/react";
 import useOptionButtons from "../resources/useOptionButtons";
 import ButtonRebirded from "../components/ButtonRebirded";
 import ReactLoading from "react-loading";
 import Sign from "./Sign";
+import SearchInput from "../components/SearchInput";
 import { Pagination } from "./Pagination";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import loadingAtom from "../atoms/loadingAtom";
 import {
-  getUsersAtom,
   onDeleteUserAtom,
   onChangePageAtom,
-  userEmailAtom,
   usersAtom,
   refreshUserAtom,
 } from "../atoms/usersAtom";
+import MoneyFormater from "../resources/MoneyFormater";
 import { currentPageAtom } from "../atoms/paginationAtom";
 export const TableContent = ({ children, url }) => {
   const { setDeleteUser, deleteUser } = useContext(clientCreatorContext);
@@ -43,22 +42,24 @@ export const TableContent = ({ children, url }) => {
         <ReactLoading type="bars" color="red" />
       ) : (
         <div className="w-11/12 flex justify-end flex-col">
-          <div className="">
+          <div className=" flex justify-between">
             <Link
               href={"/clients/create"}
               className="btn btn-primary rounded-md self-end w-fit my-2"
             >
               Crear nuevo cliente
             </Link>
+            
+            <SearchInput />
           </div>
-          <table className="table-zebra table table-compact w-11/12">
+          <table className="table-zebra table table-compact w-full">
             {children}
             <thead>
               <tr>
                 <th>Imagen</th>
                 <th>Nombre</th>
                 <th>Correo Electronico</th>
-                <th>Numero telefonico</th>
+                <th>Cedula</th>
                 <th>Ingresos mensuales</th>
                 <th>Gastos mensuales</th>
                 <th>Acciones</th>
@@ -77,9 +78,13 @@ export const TableContent = ({ children, url }) => {
                   </td>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
-                  <td>{user.phone_number}</td>
-                  <td>{user.monthly_income}</td>
-                  <td>{user.monthly_expenses}</td>
+                  <td>{user.DNI}</td>
+                  <td>
+                    {MoneyFormater.from(user.monthly_income, { symbol: "$" })}
+                  </td>
+                  <td>
+                    {MoneyFormater.from(user.monthly_expenses, { symbol: "$" })}
+                  </td>
                   <td className="gap-2 text-2xl">
                     <div className="flex gap-3 justify-center">
                       {buttonInputs.map(
@@ -97,7 +102,9 @@ export const TableContent = ({ children, url }) => {
                       )}
                     </div>
                   </td>
-                  <td className="">
+                  <td
+                    className={`${deleteUser == false ? "hidden" : "block"} `}
+                  >
                     {deleteUser && (
                       <Sign
                         icon={
