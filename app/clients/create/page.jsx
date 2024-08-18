@@ -10,15 +10,14 @@ import clientCreatorContext from "../../context/clientCreatorContext";
 import FormComp from "../../components/FormComp";
 import { Icon } from "@iconify/react";
 import ButtonRebirded from "@/app/components/ButtonRebirded";
+import { useAtomValue, useSetAtom } from "jotai";
+import { onChangePageAtom } from "@/app/atoms/usersAtom";
+import { pagesAtom } from "@/app/atoms/paginationAtom";
 const page = () => {
-  const {
-    router,
-    values,
-    success,
-    errorHandler,
-    setSuccess,
-  } = useContext(clientCreatorContext);
-
+  const { router, values, success, errorHandler, setSuccess } =
+    useContext(clientCreatorContext);
+  const onChangePage = useSetAtom(onChangePageAtom);
+  const pages = useAtomValue(pagesAtom);
   return (
     <div className="flex justify-center min-h-screen flex-col col-span-9 items-center">
       <FormComp>
@@ -79,6 +78,7 @@ const page = () => {
           <ButtonRebirded
             onClick={() => {
               setSuccess(false);
+              onChangePage(pages);
               router.push("/clients");
             }}
           >

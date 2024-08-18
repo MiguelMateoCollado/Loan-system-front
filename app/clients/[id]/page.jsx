@@ -1,24 +1,17 @@
 "use client";
 import { Icon } from "@iconify/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
-import { useAtomValue } from "jotai";
-import countAtom from "@/app/atoms/countAtom";
+import { useAtom, useSetAtom } from "jotai";
+import { userAtom, getUserAtom } from "@/app/atoms/usersAtom";
 const page = ({ params }) => {
-  const count = useAtomValue(countAtom);
   const { id } = params;
-  const [user, setUser] = useState({});
-  useEffect(() => {
-    async function getUser() {
-      console.log(id);
-      let user = await fetch(`http://localhost:3001/users/user/${id}`)
-        .then((response) => response.json())
-        .catch((error) => console.log(error));
-      setUser(user);
-    }
-    getUser();
-  }, []);
+  const getUser = useSetAtom(getUserAtom);
+  const [user, setUser] = useAtom(userAtom);
 
+  useEffect(() => {
+    setUser(getUser(id));
+  }, []);
   return (
     <div className="col-span-9 p-5 gap-x-2 grid grid-cols-5">
       <div className="col-span-4 flex gap-x-3 h-fit">
@@ -37,7 +30,6 @@ const page = ({ params }) => {
             }}
             className={`h-[25rem] w-2/3 bg-cover bg-center justify-center  col-span-1 items-center flex  overflow-hidden`}
           ></div>
-          {count}
           <div className="flex justify-around w-2/3 text-center gap-2">
             <div className="bg-green-600 p-2 w-fit rounded-md text-lg flex items-center gap-2 text-white">
               <Icon icon="material-symbols:attach-money" />

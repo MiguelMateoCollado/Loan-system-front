@@ -1,5 +1,5 @@
 "use client";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useContext } from "react";
 import clientCreatorContext from "../context/clientCreatorContext";
@@ -10,23 +10,33 @@ import ButtonRebirded from "../components/ButtonRebirded";
 import ReactLoading from "react-loading";
 import Sign from "./Sign";
 import { Pagination } from "./Pagination";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import loadingAtom from "../atoms/loadingAtom";
-import { usersAtom } from "../atoms/usersAtom";
+import {
+  getUsersAtom,
+  onDeleteUserAtom,
+  onChangePageAtom,
+  userEmailAtom,
+  usersAtom,
+  refreshUserAtom,
+} from "../atoms/usersAtom";
+import { currentPageAtom } from "../atoms/paginationAtom";
 export const TableContent = ({ children, url }) => {
-  const { setDeleteUser, deleteUser, userEmail } =
-    useContext(clientCreatorContext);
+  const { setDeleteUser, deleteUser } = useContext(clientCreatorContext);
   const { buttonInputs } = useOptionButtons();
-  let [loading,] = useAtom(loadingAtom);
-  const [users, setUsers] = useAtom(usersAtom) 
+  let [loading] = useAtom(loadingAtom);
+  const [users] = useAtom(usersAtom);
+  const handleDelete = useSetAtom(onDeleteUserAtom);
+  const handleCharge = useSetAtom(refreshUserAtom);
+  const onChangePage = useSetAtom(onChangePageAtom);
+  const currentPage = useAtomValue(currentPageAtom);
+  useEffect(() => {
+    handleCharge();
+  }, []);
 
-  const handleDelete = () => {
-    // Filtrar el array para excluir el elemento con el id proporcionado
-    const newItems = users.filter((item) => item.email !== userEmail);
-    // Actualizar el estado con el nuevo array
-    setUsers(newItems);
-    axios.delete(`${url}${userEmail}`);
-  };
+  useEffect(() => {
+    onChangePage();
+  }, [currentPage]);
   return (
     <div className="flex flex-wrap justify-center items-center w-full">
       {!loading === false ? (
@@ -105,6 +115,7 @@ export const TableContent = ({ children, url }) => {
                         <ButtonRebirded
                           onClick={() => {
                             setDeleteUser(false);
+                            handleCharge();
                             handleDelete();
                           }}
                         >

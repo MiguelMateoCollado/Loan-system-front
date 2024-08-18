@@ -1,12 +1,13 @@
 import { atom } from "jotai";
 import { usersAtom } from "./usersAtom";
-
 const currentPageAtom = atom(1);
 const pagesAtom = atom(async (get) => {
   let pages = await get(usersAtom);
   console.log();
   return pages.totalPages;
 });
+
+
 const generatePageNumbersAtom = atom(async (get) => {
   let pages = await get(pagesAtom);
   let currentPage = get(currentPageAtom);
@@ -49,7 +50,8 @@ const generatePageNumbersAtom = atom(async (get) => {
 
 const handleChangePageAtom = atom(null, async (get, set, update) => {
   let pages = await get(pagesAtom);
-  console.log(pages);
+  let currentPage = get(currentPageAtom);
+  console.log(pages, currentPage);
   if (update > 0 && update <= pages) {
     set(currentPageAtom, () => {
       return update;

@@ -2,10 +2,13 @@
 import clientCreatorContext from "../context/clientCreatorContext";
 import { useContext } from "react";
 import { Icon } from "@iconify/react";
+import { useAtom } from "jotai";
+import { userEmailAtom } from "../atoms/usersAtom";
 
 export const useOptionButtons = () => {
   const { setuserEmail, router, setDeleteUser } =
     useContext(clientCreatorContext);
+  const [, setUserEmail] = useAtom(userEmailAtom);
   let buttonInputs = [
     {
       method: (user) => {
@@ -17,7 +20,8 @@ export const useOptionButtons = () => {
     {
       method: (user) => {
         setDeleteUser(true);
-        setuserEmail(user.email);
+
+        setUserEmail(user.email);
       },
 
       icon: <Icon icon="mdi:garbage-can-outline" />,

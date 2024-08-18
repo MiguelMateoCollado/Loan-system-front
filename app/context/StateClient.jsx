@@ -4,7 +4,6 @@ import { useState } from "react";
 import validationSchema from "../resources/validationSchema";
 import useCreateClient from "../hooks/useCreateClient";
 import { useFormik } from "formik";
-import usePaginationClient from "../hooks/usePaginationClient";
 const StateClient = ({ children }) => {
   const {
     onCreateUser,

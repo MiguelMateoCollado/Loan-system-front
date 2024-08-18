@@ -3,7 +3,7 @@ import { useContext } from "react";
 import clientCreatorContext from "../context/clientCreatorContext";
 
 const ErrorSign = ({ children, name }) => {
-  const { errors, handleChange, values, success, errorHandler } =
+  const { errors } =
     useContext(clientCreatorContext);
   if (errors[name]) {
     return (
