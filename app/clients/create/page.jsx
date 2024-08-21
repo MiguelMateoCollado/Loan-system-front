@@ -14,13 +14,13 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { onChangePageAtom } from "@/app/atoms/usersAtom";
 import { pagesAtom } from "@/app/atoms/paginationAtom";
 const page = () => {
-  const { router, values, success, errorHandler, setSuccess } =
+  const { router, values, handleSubmit, success, errorHandler, setSuccess } =
     useContext(clientCreatorContext);
   const onChangePage = useSetAtom(onChangePageAtom);
   const pages = useAtomValue(pagesAtom);
   return (
     <div className="flex justify-center min-h-screen flex-col col-span-9 items-center">
-      <FormComp>
+      <FormComp onSubmit={handleSubmit}>
         <div className="col-span-1 flex flex-col gap-4 items-center">
           Foto
           <DropzoneBox />
