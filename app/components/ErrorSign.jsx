@@ -1,14 +1,15 @@
 "use client";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import clientCreatorContext from "../context/clientCreatorContext";
+import { Icon } from "@iconify/react";
+const ErrorSign = ({ name }) => {
+  const { errors } = useContext(clientCreatorContext);
 
-const ErrorSign = ({ children, name }) => {
-  const { errors } =
-    useContext(clientCreatorContext);
   if (errors[name]) {
     return (
-      <div className="bg-red-600 p-1 my-2 rounded-md w-fit text-white">
-        {errors[name]}
+      <div className=" text-red-500 p-1 flex items-center gap-x-3  rounded-md w-fit">
+        <Icon icon="gravity-ui:circle-exclamation" className="text-xl" />
+        <span className="text-base">{errors[name]}</span>
       </div>
     );
   }

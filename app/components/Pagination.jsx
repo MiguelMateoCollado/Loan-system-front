@@ -18,9 +18,10 @@ export const Pagination = () => {
       <div className="flex gap-x-1 ">
         <button
           onClick={() => handlePageChange(currentPage - 1)}
-          className="bg-gray-400 px-4 p-2 text-white rounded-md"
+          className=" text-black pr-4 p-2 rounded-md flex "
         >
-          <Icon icon="ri:arrow-left-s-line" />
+          <Icon icon="ri:arrow-left-s-line" className="my-auto" />{" "}
+          <span className="tracking-widest text-center">PREV</span>
         </button>
         {pageNumbers?.map((pageNumber, index) =>
           pageNumber === "..." ? (
@@ -36,8 +37,8 @@ export const Pagination = () => {
               onClick={() => handlePageChange(pageNumber)}
               className={
                 pageNumber === currentPage
-                  ? "bg-black px-4 p-2 text-white rounded-md"
-                  : "bg-gray-400 px-4 p-2 text-white rounded-md"
+                  ? "bg-black font-bold px-4 p-2 text-white rounded-full"
+                  : "px-4 p-2 text-black font-bold rounded-full"
               }
             >
               {pageNumber}
@@ -45,10 +46,11 @@ export const Pagination = () => {
           )
         )}
         <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          className="bg-gray-400 px-4 p-2 text-white rounded-md"
+          onClick={() => handlePageChange(currentPage - 1)}
+          className=" text-black px-4 p-2 rounded-md flex "
         >
-          <Icon icon="ri:arrow-right-s-line" />
+          <span className="tracking-widest text-center">NEXT</span>
+          <Icon icon="ri:arrow-right-s-line" className="my-auto" />
         </button>
       </div>
     </div>

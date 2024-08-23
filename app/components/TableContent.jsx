@@ -45,7 +45,7 @@ export const TableContent = ({ children, url }) => {
           <div className=" flex justify-between">
             <Link
               href={"/clients/create"}
-              className="btn btn-primary rounded-md self-end w-fit my-2"
+              className="btn bg-black text-white hover:bg-black/90 rounded-md self-end w-fit my-2"
             >
               Crear nuevo cliente
             </Link>

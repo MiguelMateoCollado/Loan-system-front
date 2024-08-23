@@ -25,7 +25,7 @@ export const InputType = ({ data, className, textareaClassName }) => {
   }
 
   return (
-    <div>
+    <div className="w-full flex flex-col">
       <label htmlFor={name}>{label}</label>
       <input
         id={id}
