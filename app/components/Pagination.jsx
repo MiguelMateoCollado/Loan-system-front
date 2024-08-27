@@ -46,8 +46,8 @@ export const Pagination = () => {
           )
         )}
         <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          className=" text-black px-4 p-2 rounded-md flex "
+          onClick={() => handlePageChange(currentPage + 1)}
+          className=" text-black px-4 p-2 rounded-md flex"
         >
           <span className="tracking-widest text-center">NEXT</span>
           <Icon icon="ri:arrow-right-s-line" className="my-auto" />

@@ -1,9 +1,9 @@
 import ErrorSign from "./ErrorSign";
-import ClientCreatorContext from "../context/clientCreatorContext";
+
 import { useContext } from "react";
 
-export const InputType = ({ data, className, textareaClassName }) => {
-  const { values, handleChange, errors } = useContext(ClientCreatorContext);
+export const InputType = ({ data, className, textareaClassName, context }) => {
+  const { values, handleChange, errors } = useContext(context);
   const { id, label, type, name, placeholder } = data;
   if (type == "textarea") {
     return (

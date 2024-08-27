@@ -1,5 +1,5 @@
 "use client";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import inputsData from "../../resources/inputsData";
 import DropzoneBox from "../../components/DropzoneBox";
@@ -14,10 +14,21 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { onChangePageAtom } from "@/app/atoms/usersAtom";
 import { pagesAtom } from "@/app/atoms/paginationAtom";
 const page = () => {
-  const { router, values, handleSubmit, success, errorHandler, setSuccess } =
-    useContext(clientCreatorContext);
+  const {
+    router,
+    values,
+    handleSubmit,
+    handleChange,
+    errors,
+    success,
+    errorHandler,
+    setSuccess,
+  } = useContext(clientCreatorContext);
   const onChangePage = useSetAtom(onChangePageAtom);
   const pages = useAtomValue(pagesAtom);
+  useEffect(() => {
+    console.log(values);
+  }, [values]);
   return (
     <div className="p-10 col-span-10 flex justify-center">
       <FormComp onSubmit={handleSubmit}>
@@ -36,6 +47,7 @@ const page = () => {
             return (
               <InputType
                 data={data}
+                context={clientCreatorContext}
                 key={data.id}
                 textareaClassName="textarea-block p-2 min-h-52 max-h-52"
                 className={`rounded-md border input-block  bg-white flex flex-col text-black/90 placeholder:text-black/80 input border-black `}

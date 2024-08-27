@@ -3,6 +3,7 @@ import "./globals.css";
 import StateClient from "./context/StateClient";
 import Sidebar from "./components/Sidebar";
 import { Provider } from "jotai";
+import StateLoan from "./context/StateLoan";
 const inter = Noto_Sans_Georgian({ subsets: ["latin"], weight: "400" });
 export const metadata = {
   title: "Create Next App",
@@ -13,12 +14,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <Provider>
-        <StateClient>
-          <body className={`${inter.className} grid grid-cols-12`}>
-            <Sidebar />
-            {children}
-          </body>
-        </StateClient>
+        <StateLoan>
+          <StateClient>
+            <body className={`${inter.className} grid grid-cols-12`}>
+              <Sidebar />
+              {children}
+            </body>
+          </StateClient>
+        </StateLoan>
       </Provider>
     </html>
   );

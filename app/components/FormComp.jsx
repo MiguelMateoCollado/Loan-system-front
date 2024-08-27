@@ -1,11 +1,11 @@
 "use client";
 
-const FormComp = ({ children, onSubmit }) => {
+const FormComp = ({ children, onSubmit, className }) => {
   return (
     <form
       encType="multipart/form-data"
       onSubmit={onSubmit}
-      className="grid grid-cols-2 w-full place-content-center gap-4"
+      className={`grid ${className} grid-cols-2 w-full place-content-start p-4 gap-4`}
     >
       {children}
     </form>
