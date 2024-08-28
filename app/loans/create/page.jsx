@@ -8,23 +8,24 @@ import axios from "axios";
 import ButtonRebirded from "@/app/components/ButtonRebirded";
 import { Icon } from "@iconify/react";
 import inputs from "@/app/resources/inputsLoan";
-import Select, { components, InputProps } from "react-select";
-
+import ErrorSign from "@/app/components/ErrorSign";
 import Sign from "@/app/components/Sign";
+import { payment_methodAtom, type_of_paymentAtom } from "@/app/atoms/loanAtom";
+import { useAtom } from "jotai";
 export const page = () => {
   const {
     values,
     handleSubmit,
     handleChange,
     setSuccess,
-
+    errors,
     success,
     setFieldValue,
   } = useContext(loansContext);
   const [users, setUsers] = useState([]);
   const [selectUser, setSelectUser] = useState();
-  const [payment_method, setPayment_method] = useState();
-  const [type_of_payment, setType_of_payment] = useState();
+  const [payment_method, setPayment_method] = useAtom(payment_methodAtom);
+  const [type_of_payment, setType_of_payment] = useAtom(type_of_paymentAtom);
   useEffect(() => {
     async function getAll() {
       let response = await axios.get("http://localhost:3001/users/all");
@@ -32,9 +33,7 @@ export const page = () => {
     }
     getAll();
   }, []);
-  useEffect(() => {
-    console.log(values);
-  }, [values]);
+
   const handleChangeUser = (e) => {
     e.preventDefault();
     setSelectUser(users.filter((user) => user.id == e.target.value)[0]);
@@ -201,6 +200,7 @@ export const page = () => {
               );
             })}
           </div>
+          {errors && <ErrorSign errors={errors} name="payment_type" />}
         </label>
         <label htmlFor="payment_method">
           Metodo de pago
@@ -234,7 +234,9 @@ export const page = () => {
               );
             })}
           </div>
+          {errors && <ErrorSign errors={errors} name="payment_method" />}
         </label>
+
         <div className="col-span-1">
           {success && (
             <Sign
@@ -253,7 +255,6 @@ export const page = () => {
               >
                 Salir
               </ButtonRebirded>
-
               <ButtonRebirded onClick={() => setSuccess(false)}>
                 Quedarse
               </ButtonRebirded>
@@ -265,7 +266,7 @@ export const page = () => {
           className="btn-primary hover:to-blue-400 col-span-1 btn rounded-md btn-block "
           onClick={() => setSuccess(true)}
         >
-          Enviar
+          Crear prestamo
         </button>
       </FormComp>
     </div>

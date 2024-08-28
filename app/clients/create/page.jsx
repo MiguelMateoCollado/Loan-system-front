@@ -34,11 +34,11 @@ const page = () => {
       <FormComp onSubmit={handleSubmit}>
         <div className="flex flex-col col-span-1 gap-y-3">
           <DropzoneBox>
-            <ErrorSign name="image" />
+            {errors && <ErrorSign errors={errors} name="image" />}
           </DropzoneBox>
 
           <DropzoneBox.Cedula>
-            <ErrorSign name="dni_images" />
+            {errors && <ErrorSign errors={errors} name="dni_images" />}
           </DropzoneBox.Cedula>
         </div>
         <div className="grid grid-cols-2  gap-x-2">
@@ -65,6 +65,7 @@ const page = () => {
                   value: values["phone_number"],
                   placeholder: "Ingresar numero de telefono",
                 }}
+                context={clientCreatorContext}
                 className="rounded-md border bg-white flex flex-col text-black/90 placeholder:text-black/80 input  border-black w-full  input-md"
               />
             </div>

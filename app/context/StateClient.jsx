@@ -39,7 +39,7 @@ const StateClient = ({ children }) => {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        await onCreateUser(values, resetForm);
+        await onCreateUser(values);
         resetForm({ role: "668711dad14a94c218db8dd5" });
       } catch (error) {
         setErrorHandler({ active: true, message: error.message });

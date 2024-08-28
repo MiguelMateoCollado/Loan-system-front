@@ -19,7 +19,7 @@ export const InputType = ({ data, className, textareaClassName, context }) => {
           onChange={handleChange}
           placeholder={placeholder}
         />
-        {errors[name] && <ErrorSign name={name} />}
+        {errors[name] && <ErrorSign errors={errors} name={name} />}
       </div>
     );
   }
@@ -30,6 +30,7 @@ export const InputType = ({ data, className, textareaClassName, context }) => {
       <input
         id={id}
         type={type || "input"}
+        min={0}
         className={`${className} ${
           errors[name] && "border-red-600 bg-red-100 placeholder:text-red-500"
         } `}
@@ -38,7 +39,7 @@ export const InputType = ({ data, className, textareaClassName, context }) => {
         onChange={handleChange}
         placeholder={placeholder}
       />
-      {errors[name] && <ErrorSign name={name} />}
+      {errors[name] && <ErrorSign errors={errors} name={name} />}
     </div>
   );
 };

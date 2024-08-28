@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { useAtom, useSetAtom } from "jotai";
 import { userAtom, getUserAtom } from "@/app/atoms/usersAtom";
+import { LoanTable } from "@/app/components/LoanTable";
 const page = ({ params }) => {
   const { id } = params;
   const getUser = useSetAtom(getUserAtom);
@@ -69,48 +70,7 @@ const page = ({ params }) => {
       <div className="col-span-3">
         <div className="flex flex-wrap w-full overflow-x-auto">
           <p className="text-lg py-3 font-bold">Prestamos</p>
-          <table className="table-zebra table">
-            <thead>
-              <tr>
-                <th>Type</th>
-                <th>Where</th>
-                <th>Description</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>1</th>
-                <td>Cy Ganderton</td>
-                <td>Quality Control Specialist</td>
-                <td>Blue</td>
-              </tr>
-              <tr>
-                <th>2</th>
-                <td>Hart Hagerty</td>
-                <td>Desktop Support Technician</td>
-                <td>Purple</td>
-              </tr>
-              <tr>
-                <th>3</th>
-                <td>Brice Swyre</td>
-                <td>Tax Accountant</td>
-                <td>Red</td>
-              </tr>
-              <tr>
-                <th>3</th>
-                <td>Brice Swyre</td>
-                <td>Tax Accountant</td>
-                <td>Red</td>
-              </tr>
-              <tr>
-                <th>3</th>
-                <td>Brice Swyre</td>
-                <td>Tax Accountant</td>
-                <td>Red</td>
-              </tr>
-            </tbody>
-          </table>
+          {id && <LoanTable id={id} />}
         </div>
         <h1 className="font-bold py-3 text-lg">Copia de las cedula</h1>
         <div className="flex gap-2">
