@@ -23,6 +23,7 @@ export const page = () => {
     setFieldValue,
   } = useContext(loansContext);
   const [users, setUsers] = useState([]);
+  const [disabled, setDisabled] = useState(true);
   const [selectUser, setSelectUser] = useState();
   const [payment_method, setPayment_method] = useAtom(payment_methodAtom);
   const [type_of_payment, setType_of_payment] = useAtom(type_of_paymentAtom);
@@ -38,9 +39,7 @@ export const page = () => {
     e.preventDefault();
     setSelectUser(users.filter((user) => user.id == e.target.value)[0]);
   };
-  useEffect(() => {
-    console.log(values);
-  }, [values]);
+
   useEffect(() => {
     async function setUser() {
       setSelectUser(await users[0]);
@@ -261,10 +260,11 @@ export const page = () => {
             </Sign>
           )}
         </div>
+
         <button
           type="submit"
-          className="btn-primary hover:to-blue-400 col-span-1 btn rounded-md btn-block "
-          onClick={() => setSuccess(true)}
+          disabled={Object.keys(errors).length > 0 ? true : false}
+          className="btn-primary disabled:bg-gray-500 disabled:cursor-none hover:to-blue-400 col-span-1 btn rounded-md btn-block "
         >
           Crear prestamo
         </button>

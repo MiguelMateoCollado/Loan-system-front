@@ -6,6 +6,9 @@ import {
   searchAtom,
   refreshUserAtom,
 } from "../atoms/usersAtom";
+
+
+
 const SearchInput = () => {
   const handleSearch = useSetAtom(searchUserAtom);
   const [search, setSearch] = useAtom(searchAtom);
@@ -18,6 +21,7 @@ const SearchInput = () => {
       handleSearch(search);
     }
   };
+
   return (
     <div className="flex items-center ">
       <button
@@ -49,5 +53,10 @@ const SearchInput = () => {
     </div>
   );
 };
+
+const User = () => {
+  
+}
+
 
 export default SearchInput;

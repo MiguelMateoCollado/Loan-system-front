@@ -6,13 +6,12 @@ import {
   generatePageNumbersAtom,
   currentPageAtom,
   handleChangePageAtom,
+  refreshPagesAtom
 } from "../atoms/paginationAtom";
-export const Pagination = () => {
+export const Pagination = ({ type }) => {
   const [currentPage] = useAtom(currentPageAtom);
   const pageNumbers = useAtomValue(generatePageNumbersAtom);
   const [, handlePageChange] = useAtom(handleChangePageAtom);
-
-  useEffect(() => {}, [currentPage]);
   return (
     <div className="my-5">
       <div className="flex gap-x-1 ">

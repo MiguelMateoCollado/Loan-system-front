@@ -9,7 +9,7 @@ export const LoanTable = ({ id }) => {
   useEffect(() => {
     const getLoansByUser = async () => {
       let response = await axios.get(`http://localhost:3001/loans/${id}`);
-      setLoans(response.data);
+      setLoans(await response.data);
     };
 
     getLoansByUser();
@@ -29,14 +29,15 @@ export const LoanTable = ({ id }) => {
           </tr>
         </thead>
         <tbody>
-          {loans.map((loan) => (
-            <tr key={loan.id}>
-              <td>{loan.amount}</td>
-              <td>{loan.payment_method}</td>
-              <td>{loan.payment_type}</td>
-              <td>{loan.months}</td>
-            </tr>
-          ))}
+          {loans.length > 0 &&
+            loans?.map((loan) => (
+              <tr key={loan.id}>
+                <td>{loan.amount}</td>
+                <td>{loan.payment_method}</td>
+                <td>{loan.payment_type}</td>
+                <td>{loan.months}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

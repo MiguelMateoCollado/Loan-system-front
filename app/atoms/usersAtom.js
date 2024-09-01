@@ -13,8 +13,7 @@ const refreshUserAtom = atom(null, async (get, set) => {
 });
 
 const getUserAtom = atom(null, async (get, set, update) => {
-  let users = await get(usersAtom);
-
+  let users = get(usersAtom);
   set(userAtom, users.users.filter((user) => user.id === update)[0]);
 });
 const userEmailAtom = atom("");
@@ -42,14 +41,13 @@ const onDeleteUserAtom = atom(null, async (get, set) => {
 const searchUserAtom = atom(null, async (get, set, update) => {
   set(currentPageAtom, 1);
   let currentPage = get(currentPageAtom);
-  console.log(update);
   let response = await axios.get(
     `http://localhost:3001/users/user/${update}?page=${currentPage}`
   );
   if (response.message !== undefined) {
     console.log(response.message);
   }
-  console.log(response.data)
+  console.log(response.data);
   set(usersAtom, response.data);
 });
 

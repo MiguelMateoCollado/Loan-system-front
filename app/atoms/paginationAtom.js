@@ -1,10 +1,18 @@
 import { atom } from "jotai";
 import { usersAtom } from "./usersAtom";
+import { loansAtom } from "./loanAtom";
 const currentPageAtom = atom(1);
-const pagesAtom = atom(async (get) => {
-  let pages = await get(usersAtom);
-  console.log();
-  return pages.totalPages;
+const pagesAtom = atom(0);
+
+const refreshPagesAtom = atom(null, async (get, set, update) => {
+  if (update === "loans") {
+    let pages = get(loansAtom);
+    set(pagesAtom, pages.totalPages);
+  }
+  if (update === "users") {
+    let pages = get(usersAtom);
+    set(pagesAtom, pages.totalPages);
+  }
 });
 
 const generatePageNumbersAtom = atom(async (get) => {
@@ -49,8 +57,6 @@ const generatePageNumbersAtom = atom(async (get) => {
 
 const handleChangePageAtom = atom(null, async (get, set, update) => {
   let pages = await get(pagesAtom);
-  let currentPage = get(currentPageAtom);
-  console.log(update);
   if (update > 0 && update <= pages) {
     set(currentPageAtom, () => {
       return update;
@@ -63,4 +69,5 @@ export {
   pagesAtom,
   handleChangePageAtom,
   generatePageNumbersAtom,
+  refreshPagesAtom,
 };

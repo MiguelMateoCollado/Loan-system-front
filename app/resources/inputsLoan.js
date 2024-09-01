@@ -1,5 +1,19 @@
 let inputs = [
   {
+    id: "months",
+    name: "months",
+    label: "Cantidad de meses",
+    type: "number",
+    placeholder: "Meses",
+  },
+  {
+    id: "amount",
+    name: "amount",
+    label: "Monto del prestamo",
+    type: "number",
+    placeholder: "Monto",
+  },
+  {
     id: "interest_rate",
     name: "interest_rate",
     label: "Tasa de interes",
@@ -19,20 +33,6 @@ let inputs = [
     label: "Tasa de Atrasos",
     type: "number",
     placeholder: "Tasa de Atrasos",
-  },
-  {
-    id: "months",
-    name: "months",
-    label: "Cantidad de meses",
-    type: "number",
-    placeholder: "Meses",
-  },
-  {
-    id: "amount",
-    name: "amount",
-    label: "Monto del prestamo",
-    type: "number",
-    placeholder: "Monto",
   },
 ];
 

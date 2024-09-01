@@ -1,6 +1,7 @@
 "use client";
 
-const FormComp = ({ children, onSubmit, className }) => {
+const FormComp = ({ children, onSubmit, className, context }) => {
+  
   return (
     <form
       encType="multipart/form-data"
