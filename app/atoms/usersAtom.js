@@ -14,7 +14,7 @@ const refreshUserAtom = atom(null, async (get, set) => {
 
 const getUserAtom = atom(null, async (get, set, update) => {
   let users = get(usersAtom);
-  set(userAtom, users.users.filter((user) => user.id === update)[0]);
+  set(userAtom, await users.users.filter((user) => user.id === update)[0]);
 });
 const userEmailAtom = atom("");
 

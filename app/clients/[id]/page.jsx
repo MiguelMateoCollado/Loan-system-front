@@ -27,7 +27,7 @@ const page = ({ params }) => {
         <div className=" flex  flex-col gap-5">
           <div
             style={{
-              backgroundImage: `url('http://localhost:3001/${user.image}')`,
+              backgroundImage: `url('http://localhost:3001/${user?.image}')`,
             }}
             className={`h-[25rem] w-2/3 bg-cover bg-center justify-center  col-span-1 items-center flex  overflow-hidden`}
           ></div>

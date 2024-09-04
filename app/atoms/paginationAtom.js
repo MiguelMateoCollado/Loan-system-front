@@ -56,7 +56,7 @@ const generatePageNumbersAtom = atom(async (get) => {
 });
 
 const handleChangePageAtom = atom(null, async (get, set, update) => {
-  let pages = await get(pagesAtom);
+  let pages = get(pagesAtom);
   if (update > 0 && update <= pages) {
     set(currentPageAtom, () => {
       return update;

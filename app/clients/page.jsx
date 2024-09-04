@@ -12,6 +12,7 @@ import ButtonRebirded from "../components/ButtonRebirded";
 import clientCreatorContext from "../context/clientCreatorContext";
 import { useContext, useEffect } from "react";
 import TextMoney from "../components/textMoney";
+import { currentPageAtom } from "../atoms/paginationAtom";
 import { refreshPagesAtom } from "../atoms/paginationAtom";
 const page = () => {
   const { setDeleteUser, deleteUser } = useContext(clientCreatorContext);
@@ -19,13 +20,15 @@ const page = () => {
   const { buttonInputs } = useOptionButtons();
   const [users] = useAtom(usersAtom);
   const handleCharge = useSetAtom(refreshUserAtom);
+  const [, setCurrentPage] = useAtom(currentPageAtom);
   useEffect(() => {
     handleCharge();
   }, []);
 
   useEffect(() => {
     onChargePage("users");
-  }, [users]);
+    setCurrentPage(1)
+  }, []);
   return (
     <div className="gap-3 col-span-10 p-10">
       <TableContent
